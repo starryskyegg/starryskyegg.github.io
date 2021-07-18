@@ -41,27 +41,36 @@
             input{width:4em}
         </style>
         <script>
-            function switchDivisions(classname){
-                var divs = document.getElementsByClassName(classname);
-                for(var i=0;i<divs.length;i++){
-                    divs[i].style.display='none';
-                };
+            function displayJudge(id,key){
+                if(key){
+                    document.getElementById(id).style.display='block'
+                }
+                else{
+                    document.getElementById(id).style.display='none'
+                }
             }
         </script>
     </head>
     <body>
+        <script>
+            var physical = true, magical = false, elemental = true, nonElemental = false;
+            var pwrBase = true, itgBase = false, spdBase = false;
+            var spdBaseDisplay = true;
+        </script>
         <h1>※請選擇攻擊類別</h1>
-        <div name='physical' class='atkType'>物理</div>
-        <div name='magcal' class='atkType'>魔法</div>
+        <div id='physical' class='atkType' onclick='physical = true;magical = false;
+        spdBaseDisplay = true;displayJudge("spdBase",spdBaseDisplay)'>物理</div>
+        <div id='magical' class='atkType' onclick='physical = false;magical = true;
+        spdBaseDisplay = false;displayJudge("spdBase",spdBaseDisplay)'>魔法</div>
         <h1 style="clear:left"><br>※請選擇屬性</h1>
-        <div name='elemental' class='elementType'>有屬性</div>
-        <div name='nonElemental' class='elementType'>無屬性</div>
+        <div id='elemental' class='elementType' onclick='elemental = true;nonElemental = false;'>有屬性</div>
+        <div id='nonElemental' class='elementType' onclick='elemental = false;nonElemental = true;'>無屬性</div>
         <h1 style="clear:left"><br>※請選擇依存類別</h1>
-        <div name='pwrBase' class='calcType' onclick='switchDivisions("main")'>腕力依存</div>
-        <div name='itgBase' class='calcType' onclick='switchDivisions("main")'>知性依存</div>
-        <div name='spdBase' class='calcType' onclick='switchDivisions("main")'>速度依存</div>
+        <div id='pwrBase' class='calcType' onclick='switchDivisions("main")'>腕力依存</div>
+        <div id='itgBase' class='calcType' onclick='switchDivisions("main")'>知性依存</div>
+        <div id='spdBase' class='calcType' onclick='switchDivisions("main")'>速度依存</div>
         <br>
-        <div id='phyPwr' class='main' style='display:block'>
+        <div id='phyPwr' class='inputSpace' style='display:block'>
             <h2>◎ 物理傷害(腕力依存)</h2>
             <form name="phyPwrBase">
             <h3>1.基礎數值</h3>
@@ -72,16 +81,16 @@
             <p>敵方物防<input type='number' value='174' name='Def'></p>
             </form>
         </div>
-        <div id='phySpd' class='main' style='display:block'>
+        <div id='phySpd' class='inputSpace' style='display:none'>
             <h2>◎ 物理(速度依存)</h2>
         </div>
-        <div id='phyItg' class='main' style='display:block'>
+        <div id='phyItg' class='inputSpace' style='display:none'>
             <h2>◎ 物理(知性依存)</h2>
         </div>
-        <div id='magItg' class='main' style='display:block'>
+        <div id='magItg' class='inputSpace' style='display:none'>
             <h2>◎ 魔法(知性依存)</h2>
         </div>
-        <div id='magPwr' class='main' style='display:block'>
+        <div id='magPwr' class='inputSpace' style='display:none'>
             <h2>◎ 魔法(腕力依存)</h2>
         </div>
     </body>
