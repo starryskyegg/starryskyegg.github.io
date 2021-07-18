@@ -2,7 +2,7 @@
     <head>
         <title>Damage Calculator</title>
         <style>
-            div.topnav{
+            div.atkType{
                 width:3em;
                 height:1.5em;
                 font-size:1.5em;
@@ -10,7 +10,25 @@
                 text-align:center;
                 background-color: rgba(192, 192, 192, 0.568);
             }
-            div.topnav:hover{background-color: rgba(192, 192, 192, 1);}
+            div.atkType:hover{background-color: rgba(192, 192, 192, 1);}
+            div.elementType{
+                width:4em;
+                height:1.5em;
+                font-size:1.5em;
+                float:left;
+                text-align:center;
+                background-color: rgba(192, 192, 192, 0.568);
+            }
+            div.elementType:hover{background-color: rgba(192, 192, 192, 1);}
+            div.calcType{
+                width:5em;
+                height:1.5em;
+                font-size:1.5em;
+                float:left;
+                text-align:center;
+                background-color: rgba(192, 192, 192, 0.568);
+            }
+            div.calcType:hover{background-color: rgba(192, 192, 192, 1);}
             div.main{
                 width:600px;
                 height:500px;
@@ -22,47 +40,29 @@
             }
             input{width:4em}
         </style>
+        <script>
+            function switchDivisions(classname){
+                var divs = document.getElementsByClassName(classname);
+                for(var i=0;i<divs.length;i++){
+                    divs[i].style.display='none';
+                };
+            }
+        </script>
     </head>
     <body>
         <h1>※請選擇攻擊類別</h1>
-        <div name='phyPwr' class='topnav'
-        onclick='document.getElementById("phyPwr").style.display="block";
-        document.getElementById("phySpd").style.display="none";
-        document.getElementById("phyItg").style.display="none";
-        document.getElementById("magItg").style.display="none";
-        document.getElementById("magPwr").style.display="none"'>
-        物腕</div>
-        <div name='phySpd' class='topnav'
-        onclick='document.getElementById("phyPwr").style.display="none";
-        document.getElementById("phySpd").style.display="block";
-        document.getElementById("phyItg").style.display="none";
-        document.getElementById("magItg").style.display="none";
-        document.getElementById("magPwr").style.display="none"'>
-        物速</div>
-        <div name='phyItg' class='topnav'
-        onclick='document.getElementById("phyPwr").style.display="none";
-        document.getElementById("phySpd").style.display="none";
-        document.getElementById("phyItg").style.display="block";
-        document.getElementById("magItg").style.display="none";
-        document.getElementById("magPwr").style.display="none"'>
-        物知</div>
-        <div name='magItg' class='topnav'
-        onclick='document.getElementById("phyPwr").style.display="none";
-        document.getElementById("phySpd").style.display="none";
-        document.getElementById("phyItg").style.display="none";
-        document.getElementById("magItg").style.display="block";
-        document.getElementById("magPwr").style.display="none"'>
-        魔知</div>
-        <div name='magPwr' class='topnav'
-        onclick='document.getElementById("phyPwr").style.display="none";
-        document.getElementById("phySpd").style.display="none";
-        document.getElementById("phyItg").style.display="none";
-        document.getElementById("magItg").style.display="none";
-        document.getElementById("magPwr").style.display="block"'>
-        魔腕</div>
+        <div name='physical' class='atkType'>物理</div>
+        <div name='magcal' class='atkType'>魔法</div>
+        <h1 style="clear:left"><br>※請選擇屬性</h1>
+        <div name='elemental' class='elementType'>有屬性</div>
+        <div name='nonElemental' class='elementType'>無屬性</div>
+        <h1 style="clear:left"><br>※請選擇依存類別</h1>
+        <div name='pwrBase' class='calcType' onclick='switchDivisions("main")'>腕力依存</div>
+        <div name='itgBase' class='calcType' onclick='switchDivisions("main")'>知性依存</div>
+        <div name='spdBase' class='calcType' onclick='switchDivisions("main")'>速度依存</div>
         <br>
         <div id='phyPwr' class='main' style='display:block'>
-            <h2>◎ 物理(腕力依存)</h2>
+            <h2>◎ 物理傷害(腕力依存)</h2>
             <form name="phyPwrBase">
             <h3>1.基礎數值</h3>
             <p>腕力<input type='number' value='' name='Pwr'>
@@ -72,16 +72,16 @@
             <p>敵方物防<input type='number' value='174' name='Def'></p>
             </form>
         </div>
-        <div id='phySpd' class='main' style='display:none'>
+        <div id='phySpd' class='main' style='display:block'>
             <h2>◎ 物理(速度依存)</h2>
         </div>
-        <div id='phyItg' class='main' style='display:none'>
+        <div id='phyItg' class='main' style='display:block'>
             <h2>◎ 物理(知性依存)</h2>
         </div>
-        <div id='magItg' class='main' style='display:none'>
+        <div id='magItg' class='main' style='display:block'>
             <h2>◎ 魔法(知性依存)</h2>
         </div>
-        <div id='magPwr' class='main' style='display:none'>
+        <div id='magPwr' class='main' style='display:block'>
             <h2>◎ 魔法(腕力依存)</h2>
         </div>
     </body>
