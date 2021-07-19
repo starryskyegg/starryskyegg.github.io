@@ -8,25 +8,28 @@
                 font-size:1.5em;
                 float:left;
                 text-align:center;
+                user-select: none;
             }
-            div.atkType:hover{background-color: rgba(192, 192, 192, 1) !important;}
+            div.atkType:hover{background-color: rgb(179, 179, 179) !important;}
             div.elementType{
                 width:4em;
                 height:1.5em;
                 font-size:1.5em;
                 float:left;
                 text-align:center;
+                user-select: none;
             }
-            div.elementType:hover{background-color: rgba(192, 192, 192, 1) !important;}
+            div.elementType:hover{background-color: rgb(179, 179, 179) !important;}
             div.calcType{
                 width:5em;
                 height:1.5em;
                 font-size:1.5em;
                 float:left;
                 text-align:center;
+                user-select: none;
             }
-            div.calcType:hover{background-color: rgba(192, 192, 192, 1) !important;}
-            div.main{
+            div.calcType:hover{background-color: rgb(179, 179, 179) !important;}
+            div.inputSpace{
                 width:600px;
                 height:500px;
                 display:block;
@@ -34,6 +37,7 @@
                 left:0;
                 clear:left;
                 display:none ;
+                user-select: none;
             }
             input{width:4em}
         </style>
@@ -108,10 +112,14 @@
             <h2>◎ 屬性物理傷害(腕力依存)</h2>
             <form name="phyElePwr">
             <h3>1.基礎數值</h3>
-            <p>腕力<input type='number' value='' name='Pwr'>
-            武器攻擊<input type='number' value='' name='WpAtk'></p>
-            <p>知性<input type='number' value='' name='Itg'>
-            武器魔攻<input type='number' value='' name='WpMatk'></p>
+            <p>腕力<input type='number' value='' name='Pwr'
+            onchange='this.form.Atk.value = Number(this.form.Pwr.value) + Number(this.form.WpAtk.value)'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'>
+            &nbsp&nbsp武器攻擊<input type='number' value='' name='WpAtk' onchange='this.form.Atk.value = Number(this.form.Pwr.value) + Number(this.form.WpAtk.value)'>
+            &nbsp&nbsp攻擊 = <output name='Atk'></output></p>
+            <p>知性<input type='number' value='' name='Itg' onchange='this.form.Matk.value = Number(this.form.Itg.value) + Number(this.form.WpMatk.value)'>
+            &nbsp&nbsp武器魔攻<input type='number' value='' name='WpMatk'>
+            &nbsp&nbsp魔攻 = <output name='Matk'></output></p>
             <p>敵方物防<input type='number' value='174' name='Def'></p>
             </form>
         </div>
