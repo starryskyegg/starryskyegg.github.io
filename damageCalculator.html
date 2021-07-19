@@ -125,6 +125,9 @@
             })
             $('.minusButton').click(function(){
                 $(this).parent().next().children().last().remove()
+                if($(this).parent().next().children().length == 0){
+                    $(this).parent().next().append('<span><input type="text" class="float"> % </span>')
+                }
             })
         })
     </script>
