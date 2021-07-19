@@ -79,7 +79,7 @@
         <script>
             $('document').ready(function(){
                 $(':text').on('input',(function(){
-                    $(this).val(this.value.replace(/[^0-9]/,""))
+                    $(this).val(this.value.replace(/[^0-9]/g,""))
                 }))
             })
         </script>
