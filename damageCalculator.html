@@ -1,201 +1,240 @@
 <html>
-    <head>
-        <title>Damage Calculator</title>
-        <style>
-            div.atkType{
-                width:3em;
-                height:1.5em;
-                font-size:1.5em;
-                float:left;
-                text-align:center;
-                user-select: none;
+
+<head>
+    <title>Damage Calculator</title>
+    <style>
+        div.atkType {
+            width: 3em;
+            height: 1.5em;
+            font-size: 1.5em;
+            float: left;
+            text-align: center;
+            user-select: none;
+        }
+
+        div.atkType:hover {
+            background-color: rgb(179, 179, 179) !important;
+        }
+
+        div.elementType {
+            width: 4em;
+            height: 1.5em;
+            font-size: 1.5em;
+            float: left;
+            text-align: center;
+            user-select: none;
+        }
+
+        div.elementType:hover {
+            background-color: rgb(179, 179, 179) !important;
+        }
+
+        div.calcType {
+            width: 5em;
+            height: 1.5em;
+            font-size: 1.5em;
+            float: left;
+            text-align: center;
+            user-select: none;
+        }
+
+        div.calcType:hover {
+            background-color: rgb(179, 179, 179) !important;
+        }
+
+        div.inputSpace {
+            width: 600px;
+            height: 500px;
+            display: block;
+            margin-top: 3em;
+            left: 0;
+            clear: left;
+            display: none;
+            user-select: none;
+        }
+
+        input[type='text'] {
+            width: 4em;
+        }
+    </style>
+    <script src='jquery-3.6.0.min.js'></script>
+    <script>
+        //計算頁面控制
+        var physical = true, magical = false, elemental = true, nonElemental = false;
+        var pwrBase = true, itgBase = false, spdBase = false;
+        function colorJudge(id, key) {
+            if (key) {
+                document.getElementById(id).style.backgroundColor = 'rgba(192, 192, 192, 0.9)';
             }
-            div.atkType:hover{background-color: rgb(179, 179, 179) !important;}
-            div.elementType{
-                width:4em;
-                height:1.5em;
-                font-size:1.5em;
-                float:left;
-                text-align:center;
-                user-select: none;
+            else {
+                document.getElementById(id).style.backgroundColor = 'rgba(192, 192, 192, 0.5)';
             }
-            div.elementType:hover{background-color: rgb(179, 179, 179) !important;}
-            div.calcType{
-                width:5em;
-                height:1.5em;
-                font-size:1.5em;
-                float:left;
-                text-align:center;
-                user-select: none;
+        }
+        function inputSpaceDisplay(id, key1, key2, key3) {
+            if (key1 && key2 && key3) {
+                document.getElementById(id).style.display = 'block';
             }
-            div.calcType:hover{background-color: rgb(179, 179, 179) !important;}
-            div.inputSpace{
-                width:600px;
-                height:500px;
-                display:block;
-                margin-top:3em;
-                left:0;
-                clear:left;
-                display:none ;
-                user-select: none;
+            else {
+                document.getElementById(id).style.display = 'none';
             }
-            input[type='text']{width:4em;}
-        </style>
-        <script src='jquery-3.6.0.min.js'></script>
-        <script>
-            var physical = true, magical = false, elemental = true, nonElemental = false;
-            var pwrBase = true, itgBase = false, spdBase = false;
-            function colorJudge(id,key){
-                if(key){
-                    document.getElementById(id).style.backgroundColor='rgba(192, 192, 192, 0.9)';
+        }
+        function allInputSpaceDisplay() {
+            inputSpaceDisplay('phyElePwr', physical, elemental, pwrBase)
+            inputSpaceDisplay('phyEleItg', physical, elemental, itgBase)
+            inputSpaceDisplay('phyEleSpd', physical, elemental, spdBase)
+            inputSpaceDisplay('phyNonPwr', physical, nonElemental, pwrBase)
+            inputSpaceDisplay('phyNonItg', physical, nonElemental, itgBase)
+            inputSpaceDisplay('phyNonSpd', physical, nonElemental, spdBase)
+            inputSpaceDisplay('magElePwr', magical, elemental, pwrBase)
+            inputSpaceDisplay('magEleItg', magical, elemental, itgBase)
+            inputSpaceDisplay('magEleSpd', magical, elemental, spdBase)
+            inputSpaceDisplay('magNonPwr', magical, nonElemental, pwrBase)
+            inputSpaceDisplay('magNonItg', magical, nonElemental, itgBase)
+            inputSpaceDisplay('magNonSpd', magical, nonElemental, spdBase)
+        }
+    </script>
+    <script>
+        $('document').ready(function () {
+            //限定輸入正整數或正浮點數
+            $(':text.nature').on('input', (function () {
+                $(this).val(this.value.replace(/[^0-9]/g, ""));
+            }))
+            $(':text.float').on('input', (function () {
+                $(this).val(this.value.replace(/[^0-9.]/g, ""));
+            }))
+            //挺身toggle
+            $('.EdrSpr').hide();
+            $('.body').click(function () {
+                if ($(this).prop('checked')) {
+                    $(this).parent().next().show();
                 }
-                else{
-                    document.getElementById(id).style.backgroundColor='rgba(192, 192, 192, 0.5)';
+                else {
+                    $(this).parent().next().hide();
                 }
-            }
-            function inputSpaceDisplay(id,key1,key2,key3){
-                if(key1&&key2&&key3){
-                    document.getElementById(id).style.display='block';
-                }
-                else{
-                    document.getElementById(id).style.display='none';
-                }
-            }
-            function allInputSpaceDisplay(){
-                inputSpaceDisplay('phyElePwr',physical,elemental,pwrBase)
-                inputSpaceDisplay('phyEleItg',physical,elemental,itgBase)
-                inputSpaceDisplay('phyEleSpd',physical,elemental,spdBase)
-                inputSpaceDisplay('phyNonPwr',physical,nonElemental,pwrBase)
-                inputSpaceDisplay('phyNonItg',physical,nonElemental,itgBase)
-                inputSpaceDisplay('phyNonSpd',physical,nonElemental,spdBase)
-                inputSpaceDisplay('magElePwr',magical,elemental,pwrBase)
-                inputSpaceDisplay('magEleItg',magical,elemental,itgBase)
-                inputSpaceDisplay('magEleSpd',magical,elemental,spdBase)
-                inputSpaceDisplay('magNonPwr',magical,nonElemental,pwrBase)
-                inputSpaceDisplay('magNonItg',magical,nonElemental,itgBase)
-                inputSpaceDisplay('magNonSpd',magical,nonElemental,spdBase)
-            }
-        </script>
-        <script>
-            $('document').ready(function(){
-                $(':text.nature').on('input',(function(){
-                    $(this).val(this.value.replace(/[^0-9]/g,""))
-                }))
-                $(':text.float').on('input',(function(){
-                    $(this).val(this.value.replace(/[^0-9.]/g,""))
-                }))
-                $('')
             })
-        </script>
-    </head>
-    <body onpaste='return false'>
-        <h1>※請選擇攻擊類別</h1>
-        <div id='physical' class='atkType'>物理</div>
-        <div id='magical' class='atkType'>魔法</div>
-        <script>
-            document.getElementById('physical').style.background='rgba(192, 192, 192, 0.9)'
-            document.getElementById('magical').style.background='rgba(192, 192, 192, 0.5)'
-            document.getElementById('physical').onclick=function(){
-                physical = true;magical = false;allInputSpaceDisplay();
-                colorJudge("physical",physical);colorJudge("magical",magical);
-            }
-            document.getElementById('magical').onclick=function(){
-                physical = false;magical = true;allInputSpaceDisplay();
-                colorJudge("physical",physical);colorJudge("magical",magical);
-            }
-        </script>
-        <h1 style="clear:left"><br>※請選擇屬性</h1>
-        <div id='elemental' class='elementType'>有屬性</div>
-        <div id='nonElemental' class='elementType'>無屬性</div>
-        <script>
-            document.getElementById('elemental').style.backgroundColor='rgba(192, 192, 192, 0.9)'
-            document.getElementById('nonElemental').style.backgroundColor='rgba(192, 192, 192, 0.5)'
-            document.getElementById('elemental').onclick=function(){
-                elemental = true;nonElemental = false;allInputSpaceDisplay();
-                colorJudge("elemental",elemental);colorJudge("nonElemental",nonElemental)
-            }
-            document.getElementById('nonElemental').onclick=function(){
-                elemental = false;nonElemental = true;allInputSpaceDisplay();
-                colorJudge("elemental",elemental);colorJudge("nonElemental",nonElemental)
-            }
-        </script>
-        <h1 style="clear:left"><br>※請選擇計算類別</h1>
-        <div id='pwrBase' class='calcType'>腕力依存</div>
-        <div id='itgBase' class='calcType'>知性依存</div>
-        <div id='spdBase' class='calcType'>速度依存</div>
-        <script>
-            document.getElementById('pwrBase').style.backgroundColor='rgba(192, 192, 192, 0.9)'
-            document.getElementById('itgBase').style.backgroundColor='rgba(192, 192, 192, 0.5)'
-            document.getElementById('spdBase').style.backgroundColor='rgba(192, 192, 192, 0.5)'
-            document.getElementById('pwrBase').onclick=function(){
-                pwrBase = true;itgBase = false;spdBase = false;allInputSpaceDisplay();
-                colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase);
-            }
-            document.getElementById('itgBase').onclick=function(){
-                pwrBase = false;itgBase = true;spdBase = false;allInputSpaceDisplay();
-                colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase);
-            }
-            document.getElementById('spdBase').onclick=function(){
-                pwrBase = false;itgBase = false;spdBase = true;allInputSpaceDisplay();
-                colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase);
-            }
-        </script>
-        <br><br>
-        <div id='phyElePwr' class='inputSpace' style='display:block'>
-            <h2>◎ 屬性物理傷害(腕力依存)</h2>
-            <form name="phyElePwr">
+        })
+    </script>
+</head>
+
+<body onpaste='return false'>
+    <h1>※請選擇攻擊類別</h1>
+    <div id='physical' class='atkType'>物理</div>
+    <div id='magical' class='atkType'>魔法</div>
+    <script>//物理魔法控制
+        document.getElementById('physical').style.background = 'rgba(192, 192, 192, 0.9)'
+        document.getElementById('magical').style.background = 'rgba(192, 192, 192, 0.5)'
+        document.getElementById('physical').onclick = function () {
+            physical = true; magical = false; allInputSpaceDisplay();
+            colorJudge("physical", physical); colorJudge("magical", magical);
+        }
+        document.getElementById('magical').onclick = function () {
+            physical = false; magical = true; allInputSpaceDisplay();
+            colorJudge("physical", physical); colorJudge("magical", magical);
+        }</script>
+    <h1 style="clear:left"><br>※請選擇屬性</h1>
+    <div id='elemental' class='elementType'>有屬性</div>
+    <div id='nonElemental' class='elementType'>無屬性</div>
+    <script>//屬性控制
+        document.getElementById('elemental').style.backgroundColor = 'rgba(192, 192, 192, 0.9)'
+        document.getElementById('nonElemental').style.backgroundColor = 'rgba(192, 192, 192, 0.5)'
+        document.getElementById('elemental').onclick = function () {
+            elemental = true; nonElemental = false; allInputSpaceDisplay();
+            colorJudge("elemental", elemental); colorJudge("nonElemental", nonElemental)
+        }
+        document.getElementById('nonElemental').onclick = function () {
+            elemental = false; nonElemental = true; allInputSpaceDisplay();
+            colorJudge("elemental", elemental); colorJudge("nonElemental", nonElemental)
+        }</script>
+    <h1 style="clear:left"><br>※請選擇計算類別</h1>
+    <div id='pwrBase' class='calcType'>腕力依存</div>
+    <div id='itgBase' class='calcType'>知性依存</div>
+    <div id='spdBase' class='calcType'>速度依存</div>
+    <script>//依存控制
+        document.getElementById('pwrBase').style.backgroundColor = 'rgba(192, 192, 192, 0.9)'
+        document.getElementById('itgBase').style.backgroundColor = 'rgba(192, 192, 192, 0.5)'
+        document.getElementById('spdBase').style.backgroundColor = 'rgba(192, 192, 192, 0.5)'
+        document.getElementById('pwrBase').onclick = function () {
+            pwrBase = true; itgBase = false; spdBase = false; allInputSpaceDisplay();
+            colorJudge("pwrBase", pwrBase); colorJudge("itgBase", itgBase); colorJudge("spdBase", spdBase);
+        }
+        document.getElementById('itgBase').onclick = function () {
+            pwrBase = false; itgBase = true; spdBase = false; allInputSpaceDisplay();
+            colorJudge("pwrBase", pwrBase); colorJudge("itgBase", itgBase); colorJudge("spdBase", spdBase);
+        }
+        document.getElementById('spdBase').onclick = function () {
+            pwrBase = false; itgBase = false; spdBase = true; allInputSpaceDisplay();
+            colorJudge("pwrBase", pwrBase); colorJudge("itgBase", itgBase); colorJudge("spdBase", spdBase);
+        }</script>
+    <br><br>
+    <div id='phyElePwr' class='inputSpace' style='display:block'>
+        <h2>◎ 屬性物理傷害(腕力依存)</h2>
+        <form>
             <h3>1.基礎數值</h3>
-            <p>腕力<input type='text' value='' name='Pwr' class='nature'>&nbsp
-            武器攻擊<input type='text' value='' name='WpAtk' class='nature'></p>
-            <p>知性<input type='text' value='' name='Itg' class='nature'>&nbsp
-            武器魔攻<input type='text' value='' name='WpMatk' class='nature'></p>
-            <p><input name='bodyJudge' type='checkbox'
-            onclick="if(this.checked==true){document.getElementById('bodyInput').style.display='inline-block'}
-            else{document.getElementById('bodyInput').style.display='none'}">
-            挺身<span id='bodyInput' style='display:none'>
-            &nbsp&nbsp&nbsp&nbsp耐力<input name='Edr' type='text' class='nature'>
-            &nbsp&nbsp精神<input name='Spr' type='number' class='nature'></span></p>
-            <p><input name='adversityJugde' type='checkbox'> 逆境</p>
-            <p>敵方物防<input type='text' value='174' name='Def' class='nature'></p>
-            <p>技能倍率<input type='text' value='' name='Multiplyer' class='nature'> &nbsp連擊數<input type='text' value='1' name='Hits' class='nature'></p>
+            <div>
+                腕力<input id='Pwr1' type='text' value='' class='nature'>&nbsp
+                武器攻擊<input id='WpAtk1' type='text' value='' class='nature'>
+            </div><br>
+            <div>
+                知性<input id='Itg1' type='text' value='' class='nature'>&nbsp
+                武器魔攻<input id='WpMatk1' type='text' value='' class='nature'>
+            </div><br>
+            <div>
+                <div>
+                    <input id='body1' type='checkbox' class='body'>挺身
+                </div>
+                <div id='EdrSpr1' class='EdrSpr'>
+                    耐力<input id='Edr1' type='text' class='nature'>精神<input id='Spr1' type='text' class='nature'>
+                </div><br>
+            </div>
+            <div>
+                <input id='adversity1' type='checkbox'>逆境
+            </div><br>
+            <div>
+                敵方物防<input id='Def1' type='text' value='174' class='nature'>
+            </div><br>
+            <div>
+                技能倍率<input id='SkillMul1' type='text' value='' class='nature'>&nbsp
+                連擊數<input id='Hits1' type='text' value='1' class='nature'>
+            </div>
             <h3>2.增傷計算</h3>
             <p></p>
-            </form>
-        </div>
-        <div id='phyEleItg' class='inputSpace' style='display:none'>
-            <h2>◎ 屬性物理傷害(知性依存)</h2>
-        </div>
-        <div id='phyEleSpd' class='inputSpace' style='display:none'>
-            <h2>◎ 屬性物理傷害(速度依存)</h2>
-        </div>
-        <div id='phyNonPwr' class='inputSpace' style='display:none'>
-            <h2>◎ 無屬性物理傷害(腕力依存)</h2>
-        </div>
-        <div id='phyNonItg' class='inputSpace' style='display:none'>
-            <h2>◎ 無屬性物理傷害(知性依存)</h2>
-        </div>
-        <div id='phyNonSpd' class='inputSpace' style='display:none'>
-            <h2>◎ 無屬性物理傷害(速度依存)</h2>
-        </div>
-        <div id='magElePwr' class='inputSpace' style='display:none'>
-            <h2>◎ 屬性魔法傷害(腕力依存)</h2>
-        </div>
-        <div id='magEleItg' class='inputSpace' style='display:none'>
-            <h2>◎ 屬性魔法傷害(知性依存)</h2>
-        </div>
-        <div id='magEleSpd' class='inputSpace' style='display:none'>
-            <h2>◎ 屬性魔法傷害(速度依存)</h2>
-            <p>目前沒有，有了再用</p>
-        </div>
-        <div id='magNonPwr' class='inputSpace' style='display:none'>
-            <h2>◎ 無屬性魔法傷害(腕力依存)</h2>
-        </div>
-        <div id='magNonItg' class='inputSpace' style='display:none'>
-            <h2>◎ 無屬性魔法傷害(知性依存)</h2>
-        </div>
-        <div id='magNonSpd' class='inputSpace' style='display:none'>
-            <h2>◎ 無屬性魔法傷害(速度依存)</h2>
-            <p>目前沒有，有了再用</p>
-        </div>
-    </body>
+        </form>
+    </div>
+    <div id='phyEleItg' class='inputSpace' style='display:none'>
+        <h2>◎ 屬性物理傷害(知性依存)</h2>
+    </div>
+    <div id='phyEleSpd' class='inputSpace' style='display:none'>
+        <h2>◎ 屬性物理傷害(速度依存)</h2>
+    </div>
+    <div id='phyNonPwr' class='inputSpace' style='display:none'>
+        <h2>◎ 無屬性物理傷害(腕力依存)</h2>
+    </div>
+    <div id='phyNonItg' class='inputSpace' style='display:none'>
+        <h2>◎ 無屬性物理傷害(知性依存)</h2>
+    </div>
+    <div id='phyNonSpd' class='inputSpace' style='display:none'>
+        <h2>◎ 無屬性物理傷害(速度依存)</h2>
+    </div>
+    <div id='magElePwr' class='inputSpace' style='display:none'>
+        <h2>◎ 屬性魔法傷害(腕力依存)</h2>
+    </div>
+    <div id='magEleItg' class='inputSpace' style='display:none'>
+        <h2>◎ 屬性魔法傷害(知性依存)</h2>
+    </div>
+    <div id='magEleSpd' class='inputSpace' style='display:none'>
+        <h2>◎ 屬性魔法傷害(速度依存)</h2>
+        <p>目前沒有，有了再用</p>
+    </div>
+    <div id='magNonPwr' class='inputSpace' style='display:none'>
+        <h2>◎ 無屬性魔法傷害(腕力依存)</h2>
+    </div>
+    <div id='magNonItg' class='inputSpace' style='display:none'>
+        <h2>◎ 無屬性魔法傷害(知性依存)</h2>
+    </div>
+    <div id='magNonSpd' class='inputSpace' style='display:none'>
+        <h2>◎ 無屬性魔法傷害(速度依存)</h2>
+        <p>目前沒有，有了再用</p>
+    </div>
+</body>
+
 </html>
