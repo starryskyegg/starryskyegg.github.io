@@ -78,7 +78,7 @@
         </script>
         <script>
             $('document').ready(function(){
-                $(':text').on('input',(function(){
+                $(':text.nature').on('input',(function(){
                     $(this).val(this.value.replace(/[^0-9]/g,""))
                 }))
             })
@@ -141,18 +141,18 @@
             <h2>◎ 屬性物理傷害(腕力依存)</h2>
             <form name="phyElePwr">
             <h3>1.基礎數值</h3>
-            <p>腕力<input type='text' value='' name='Pwr'>
-            &nbsp&nbsp武器攻擊<input type='text' value='' name='WpAtk'></p>
-            <p>知性<input type='text' value='' name='Itg'>
-            &nbsp&nbsp武器魔攻<input type='text' value='' name='WpMatk'></p>
+            <p>腕力<input type='text' value='' name='Pwr' class='nature'>&nbsp
+            武器攻擊<input type='text' value='' name='WpAtk' class='nature'></p>
+            <p>知性<input type='text' value='' name='Itg' class='nature'>&nbsp
+            武器魔攻<input type='text' value='' name='WpMatk' class='nature'></p>
             <p><input name='bodyJudge' type='checkbox'
             onclick="if(this.checked==true){document.getElementById('bodyInput').style.display='inline-block'}
             else{document.getElementById('bodyInput').style.display='none'}">
             挺身<span id='bodyInput' style='display:none'>
-            &nbsp&nbsp&nbsp&nbsp耐力<input name='Edr' type='text'>
-            &nbsp&nbsp精神<input name='Spr' type='text'></span></p>
+            &nbsp&nbsp&nbsp&nbsp耐力<input name='Edr' type='text' class='nature'>
+            &nbsp&nbsp精神<input name='Spr' type='number' class='nature'></span></p>
             <p><input name='adversityJugde' type='checkbox'> 逆境</p>
-            <p>敵方物防<input type='text' value='174' name='Def'></p>
+            <p>敵方物防<input type='number' value='174' name='Def' class='nature'></p>
             <h3>2.增傷計算</h3>
             <p></p>
             </form>
