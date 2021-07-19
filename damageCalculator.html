@@ -113,13 +113,15 @@
                         $(this).parent().next().hide();
                     }
                 })}
-            //挺身toggle
+            //蓄珠數值收合
+            OnOff('.stack','.stackAddition')
+            //挺身收合
             OnOff('.body','.EdrSpr');
-            //腕力buff toggle
+            //腕力buff收合
             OnOff('.PwrBuffCheck','.PwrBuffs')
-            //智力buff toggle
+            //智力buff收合
             OnOff('.ItgBuffCheck','.ItgBuffs')
-            //增減輸入欄
+            //增減輸入欄數量
             $('.plusButton').click(function(){
                 $(this).parent().next().append('<span><input type="text" class="float"> % </span>')
             })
@@ -197,24 +199,25 @@
             </div><br>
             <div>
                 <div>
+                    <input id='stack1' type='checkbox' class='stack'>蓄珠數值提升
+                </div>
+                <div id='StackAddition1' class='stackAddition'>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp腕力提升<input id='stackPwr1' type='text' class='nature'>&nbsp
+                    知性提升<input id='stackItg1' type='text' class='nature'>
+                </div><br>
+            </div>
+            <div>
+                <div>
                     <input id='body1' type='checkbox' class='body'>挺身
                 </div>
                 <div id='EdrSpr1' class='EdrSpr'>
-                    <br>耐力<input id='Edr1' type='text' class='nature'>&nbsp
+                    &nbsp&nbsp&nbsp&nbsp&nbsp耐力<input id='Edr1' type='text' class='nature'>&nbsp
                     精神<input id='Spr1' type='text' class='nature'>
                 </div><br>
             </div>
             <div>
                 <input id='adversity1' type='checkbox'>逆境
             </div><br>
-            <div>
-                敵方物防<input id='Def1' type='text' value='174' class='nature'>
-            </div><br>
-            <div>
-                技能倍率<input id='SkillMul1' type='text' value='' class='nature'> % &nbsp
-                連擊數<input id='Hits1' type='text' value='1' class='nature'>
-            </div>
-            <h3>2.增傷計算</h3>
             <div>
                 <input id='PwrBuff1' type='checkbox' class='PwrBuffCheck'>腕力BUFF
             </div>
@@ -223,7 +226,7 @@
                     <input type='button' class='plusButton' value='＋'>
                     <input type='button' class='minusButton' value='－'>
                 </span>
-                <span>
+                <span id='PwrBuffList1'>
                     <span><input type="text" class="float"> % </span>
                 </span>
             </div><br>
@@ -231,10 +234,23 @@
                 <input id='ItgBuff1' type='checkbox' class='ItgBuffCheck'>知性BUFF
             </div>
             <div id='ItgBuffs1' class='ItgBuffs'>&nbsp&nbsp&nbsp&nbsp
-                <input id='Edr1' type='text' class='nature'> %
-                <input id='Spr1' type='text' class='nature'> %
+                <span>
+                    <input type='button' class='plusButton' value='＋'>
+                    <input type='button' class='minusButton' value='－'>
+                </span>
+                <span id='ItgBuffList1'>
+                    <span><input type="text" class="float"> % </span>
+                </span>
             </div><br>
+            <div>
+                技能倍率<input id='SkillMul1' type='text' value='100' class='nature'> % &nbsp
+                連擊數<input id='Hits1' type='text' value='1' class='nature'>
+            </div><br>
+            <div>
+                敵方物防<input id='Def1' type='text' value='174' class='nature'>
+            </div>
         </form>
+        <h3>2.增傷計算</h3>
     </div>
     <div id='phyEleItg' class='inputSpace' style='display:none'>
         <h2>◎ 屬性物理傷害(知性依存)</h2>
