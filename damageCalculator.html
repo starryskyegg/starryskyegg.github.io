@@ -39,7 +39,7 @@
                 display:none ;
                 user-select: none;
             }
-            input{width:4em}
+            input[type='text']{width:4em;}
         </style>
         <script>
             var physical = true, magical = false, elemental = true, nonElemental = false;
@@ -78,49 +78,86 @@
     </head>
     <body>
         <h1>※請選擇攻擊類別</h1>
-        <div id='physical' class='atkType' onclick='physical = true;magical = false;allInputSpaceDisplay();
-        spdBaseDisplay = true;colorJudge("physical",physical);colorJudge("magical",magical)'>物理</div>
-        <div id='magical' class='atkType' onclick='physical = false;magical = true;allInputSpaceDisplay();
-        spdBaseDisplay = false;colorJudge("physical",physical);colorJudge("magical",magical)'>魔法</div>
-        <script>//color default
+        <div id='physical' class='atkType'>物理</div>
+        <div id='magical' class='atkType'>魔法</div>
+        <script>
             document.getElementById('physical').style.background='rgba(192, 192, 192, 0.9)'
             document.getElementById('magical').style.background='rgba(192, 192, 192, 0.5)'
+            document.getElementById('physical').onclick=function(){
+                physical = true;magical = false;allInputSpaceDisplay();
+                colorJudge("physical",physical);colorJudge("magical",magical);
+            }
+            document.getElementById('magical').onclick=function(){
+                physical = false;magical = true;allInputSpaceDisplay();
+                colorJudge("physical",physical);colorJudge("magical",magical);
+            }
         </script>
         <h1 style="clear:left"><br>※請選擇屬性</h1>
-        <div id='elemental' class='elementType' onclick='elemental = true;nonElemental = false;allInputSpaceDisplay();
-        colorJudge("elemental",elemental);colorJudge("nonElemental",nonElemental)'>有屬性</div>
-        <div id='nonElemental' class='elementType' onclick='elemental = false;nonElemental = true;allInputSpaceDisplay();
-        colorJudge("elemental",elemental);colorJudge("nonElemental",nonElemental)'>無屬性</div>
-        <script>//color default
+        <div id='elemental' class='elementType'>有屬性</div>
+        <div id='nonElemental' class='elementType'>無屬性</div>
+        <script>
             document.getElementById('elemental').style.backgroundColor='rgba(192, 192, 192, 0.9)'
             document.getElementById('nonElemental').style.backgroundColor='rgba(192, 192, 192, 0.5)'
+            document.getElementById('elemental').onclick=function(){
+                elemental = true;nonElemental = false;allInputSpaceDisplay();
+                colorJudge("elemental",elemental);colorJudge("nonElemental",nonElemental)
+            }
+            document.getElementById('nonElemental').onclick=function(){
+                elemental = false;nonElemental = true;allInputSpaceDisplay();
+                colorJudge("elemental",elemental);colorJudge("nonElemental",nonElemental)
+            }
         </script>
         <h1 style="clear:left"><br>※請選擇計算類別</h1>
-        <div id='pwrBase' class='calcType' onclick='pwrBase = true;itgBase = false;spdBase = false;allInputSpaceDisplay();
-        colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase)'>腕力依存</div>
-        <div id='itgBase' class='calcType' onclick='pwrBase = false;itgBase = true;spdBase = false;allInputSpaceDisplay();
-        colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase)'>知性依存</div>
-        <div id='spdBase' class='calcType' onclick='pwrBase = false;itgBase = false;spdBase = true;allInputSpaceDisplay();
-        colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase)'>速度依存</div>
-        <script>//color default
+        <div id='pwrBase' class='calcType'>腕力依存</div>
+        <div id='itgBase' class='calcType'>知性依存</div>
+        <div id='spdBase' class='calcType'>速度依存</div>
+        <script>
             document.getElementById('pwrBase').style.backgroundColor='rgba(192, 192, 192, 0.9)'
             document.getElementById('itgBase').style.backgroundColor='rgba(192, 192, 192, 0.5)'
             document.getElementById('spdBase').style.backgroundColor='rgba(192, 192, 192, 0.5)'
+            document.getElementById('pwrBase').onclick=function(){
+                pwrBase = true;itgBase = false;spdBase = false;allInputSpaceDisplay();
+                colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase);
+            }
+            document.getElementById('itgBase').onclick=function(){
+                pwrBase = false;itgBase = true;spdBase = false;allInputSpaceDisplay();
+                colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase);
+            }
+            document.getElementById('spdBase').onclick=function(){
+                pwrBase = false;itgBase = false;spdBase = true;allInputSpaceDisplay();
+                colorJudge("pwrBase",pwrBase);colorJudge("itgBase",itgBase);colorJudge("spdBase",spdBase);
+            }
         </script>
         <br><br>
         <div id='phyElePwr' class='inputSpace' style='display:block'>
             <h2>◎ 屬性物理傷害(腕力依存)</h2>
             <form name="phyElePwr">
             <h3>1.基礎數值</h3>
-            <p>腕力<input type='number' value='' name='Pwr'
+            <p>腕力<input type='text' value='' name='Pwr'
             onchange='this.form.Atk.value = Number(this.form.Pwr.value) + Number(this.form.WpAtk.value)'
             onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'>
-            &nbsp&nbsp武器攻擊<input type='number' value='' name='WpAtk' onchange='this.form.Atk.value = Number(this.form.Pwr.value) + Number(this.form.WpAtk.value)'>
-            &nbsp&nbsp攻擊 = <output name='Atk'></output></p>
-            <p>知性<input type='number' value='' name='Itg' onchange='this.form.Matk.value = Number(this.form.Itg.value) + Number(this.form.WpMatk.value)'>
-            &nbsp&nbsp武器魔攻<input type='number' value='' name='WpMatk'>
-            &nbsp&nbsp魔攻 = <output name='Matk'></output></p>
-            <p>敵方物防<input type='number' value='174' name='Def'></p>
+            &nbsp&nbsp武器攻擊<input type='text' value='' name='WpAtk'
+            onchange='this.form.Atk.value = Number(this.form.Pwr.value) + Number(this.form.WpAtk.value)'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'></p>
+            <p>知性<input type='text' value='' name='Itg'
+            onchange='this.form.Matk.value = Number(this.form.Itg.value) + Number(this.form.WpMatk.value)'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'>
+            &nbsp&nbsp武器魔攻<input type='text' value='' name='WpMatk'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'></p>
+            <p><input name='bodyJudge' type='checkbox'
+            onclick="if(this.checked==true){document.getElementById('bodyInput').style.display='inline-block'}
+            else{document.getElementById('bodyInput').style.display='none'}"
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'>
+            挺身<span id='bodyInput' style='display:none'>
+            &nbsp&nbsp&nbsp&nbsp耐力<input name='Edr' type='text'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'>
+            &nbsp&nbsp精神<input name='Spr' type='text'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'></span></p>
+            <p><input name='adversityJugde' type='checkbox'> 逆境</p>
+            <p>敵方物防<input type='text' value='174' name='Def'
+            onkeyup='this.value=this.value.replace(/[^0-9s]/,"")'></p>
+            <h3>2.增傷計算</h3>
+            <p></p>>
             </form>
         </div>
         <div id='phyEleItg' class='inputSpace' style='display:none'>
