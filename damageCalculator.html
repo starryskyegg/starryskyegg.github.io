@@ -119,6 +119,13 @@
             OnOff('.PwrBuffCheck','.PwrBuffs')
             //智力buff toggle
             OnOff('.ItgBuffCheck','.ItgBuffs')
+            //增減輸入欄
+            $('.plusButton').click(function(){
+                $(this).parent().next().append('<span><input type="text" class="float"> % </span>')
+            })
+            $('.minusButton').click(function(){
+                $(this).parent().next().children().last().remove()
+            })
         })
     </script>
 </head>
@@ -201,7 +208,7 @@
                 敵方物防<input id='Def1' type='text' value='174' class='nature'>
             </div><br>
             <div>
-                技能倍率<input id='SkillMul1' type='text' value='' class='nature'>&nbsp
+                技能倍率<input id='SkillMul1' type='text' value='' class='nature'> % &nbsp
                 連擊數<input id='Hits1' type='text' value='1' class='nature'>
             </div>
             <h3>2.增傷計算</h3>
@@ -209,8 +216,13 @@
                 <input id='PwrBuff1' type='checkbox' class='PwrBuffCheck'>腕力BUFF
             </div>
             <div id='PwrBuffs1' class='PwrBuffs'>&nbsp&nbsp&nbsp&nbsp
-                <input id='Edr1' type='text' class='nature'> %
-                <input id='Spr1' type='text' class='nature'> %
+                <span>
+                    <input type='button' class='plusButton' value='＋'>
+                    <input type='button' class='minusButton' value='－'>
+                </span>
+                <span>
+                    <span><input type="text" class="float"> % </span>
+                </span>
             </div><br>
             <div>
                 <input id='ItgBuff1' type='checkbox' class='ItgBuffCheck'>知性BUFF
