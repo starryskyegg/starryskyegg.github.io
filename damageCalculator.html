@@ -81,6 +81,10 @@
                 $(':text.nature').on('input',(function(){
                     $(this).val(this.value.replace(/[^0-9]/g,""))
                 }))
+                $(':text.float').on('input',(function(){
+                    $(this).val(this.value.replace(/[^0-9.]/g,""))
+                }))
+                $('')
             })
         </script>
     </head>
@@ -152,7 +156,8 @@
             &nbsp&nbsp&nbsp&nbsp耐力<input name='Edr' type='text' class='nature'>
             &nbsp&nbsp精神<input name='Spr' type='number' class='nature'></span></p>
             <p><input name='adversityJugde' type='checkbox'> 逆境</p>
-            <p>敵方物防<input type='number' value='174' name='Def' class='nature'></p>
+            <p>敵方物防<input type='text' value='174' name='Def' class='nature'></p>
+            <p>技能倍率<input type='text' value='' name='Multiplyer' class='nature'> &nbsp連擊數<input type='text' value='1' name='Hits' class='nature'></p>
             <h3>2.增傷計算</h3>
             <p></p>
             </form>
