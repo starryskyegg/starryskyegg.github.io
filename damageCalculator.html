@@ -181,6 +181,12 @@
             OnOff('.PhyRstDownCheck')
             //物理耐性UP收合
             OnOff('.PhyRstUpCheck')
+            //屬性buff收合
+            OnOff('.EleBuffCheck')
+            //武器種buff收合
+            OnOff('.WpBuffCheck')
+            //AFcombo收合
+            OnOff('.AFcomboCheck')
         })
     </script>
 </head>
@@ -257,7 +263,7 @@
             <span><!--挺身part-->
                 <input id='body1' type='checkbox' class='bodyCheck'>挺身
             </span>
-            <span id='EdrSpr1' class='EdrSpr'>
+            <span id='bodyBlock1' class='bodyBlock'>
                 &nbsp&nbsp&nbsp&nbsp&nbsp耐力<input id='Edr1' type='text' class='nature'>&nbsp
                 精神<input id='Spr1' type='text' class='nature'>
             </span><br><br>
@@ -326,6 +332,9 @@
         </form>
         <h3>2.增傷計算</h3>
         <form>
+            <div><!--心眼part-->
+                <input id='hearteye1' type='checkbox'>心眼
+            </div><br>
             <span><!--屬性耐性DOWN part-->
                 <input id='EleRstDown1' type='checkbox' class='EleRstDownCheck'>屬性耐性DOWN
             </span>
@@ -378,6 +387,42 @@
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 物理耐性UP效果 = <span id='PhyRstUpOutput1'>0</span> %
             </span><br><br>
+            <div><!--攻擊己方part-->
+                <input id='chaos1' type='checkbox'>混亂或卑鄙時攻擊己方
+            </div><br>
+            <span><!--屬性BUFF part-->
+                <input id='EleBuff1' type='checkbox' class='EleBuffCheck'>屬性BUFF
+            </span>
+            <span id='EleBuffBlock1' class='EleBuffBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span>
+                    <input type='button' class='plusButton' value='＋'>
+                    <input type='button' class='minusButton' value='－'>
+                </span>
+                <span id='EleBuffInput1'>
+                    <span><input type="text" class="Decrease float"> % </span>
+                </span><br>&nbsp&nbsp&nbsp&nbsp
+                屬性BUFF效果 = <span id='EleBuffOutput1'>0</span> %
+            </span><br><br>
+            <span><!--武器種BUFF part-->
+                <input id='WpBuff1' type='checkbox' class='WpBuffCheck'>武器種類BUFF
+            </span>
+            <span id='WpBuffBlock1' class='WpBuffBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span>
+                    <input type='button' class='plusButton' value='＋'>
+                    <input type='button' class='minusButton' value='－'>
+                </span>
+                <span id='WpBuffInput1'>
+                    <span><input type="text" class="Decrease float"> % </span>
+                </span><br>&nbsp&nbsp&nbsp&nbsp
+                武器種類BUFF效果 = <span id='WpBuffOutput1'>0</span> %
+            </span><br><br>
+            <span><!--AF Combo part-->
+                <input id='AFcombo1' type='checkbox' class='AFcomboCheck'>AF combo
+            </span>
+            <span id='AFcomboBlock1' class='AFcomboBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbspAF combo = <input id='combo1' type='text' class='nature'> % 
+            </span><br><br>
+            
         </form>
     </div>
     <div id='phyEleItg' class='inputSpace' style='display:none'>
