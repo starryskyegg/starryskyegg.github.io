@@ -96,11 +96,17 @@
     <script>
         $('document').ready(function () {
             //限定輸入正整數或正浮點數
-            $(':text.nature').on('input', (function () {
+            $(document).on('input',':text.nature', (function () {
                 $(this).val(this.value.replace(/[^0-9]/g, ""));
             }))
-            $(':text.float').on('input', (function () {
-                $(this).val(this.value.replace(/[^0-9.]/g, ""));
+            $(document).on('input',':text.float', (function () {
+                $(this).val($(this).val().replace(/[^0-9.]/g, ""));
+                if($(this).val().indexOf('.') != -1){
+                    var str_ = $(this).val().substr($(this).val().indexOf('.') + 1);
+                    if (str_.indexOf(".") != -1) {
+                        $(this).val($(this).val().substr(0, $(this).val().indexOf(".") + str_.indexOf(".") + 1));
+                    }
+                }
             }))
             //收合
             function OnOff(checkbox){
