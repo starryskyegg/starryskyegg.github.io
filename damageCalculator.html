@@ -274,6 +274,8 @@
             OnOff('.SkillDebuffNumCheck');
             //爆傷收合
             OnOff('.CritBuffCheck');
+            //ZONE收合
+            OnOff('.ZoneCheck');
         })
     </script>
 </head>
@@ -638,6 +640,17 @@
             <div><!--狙擊-->
                 <input id='SnipeCheck1' type='checkbox'>狙擊
             </div><br>
+            <span><!--ZONE-->
+                <input id='ZoneCheck1' type='checkbox' class='ZoneCheck'>ZONE
+            </span>
+            <span id='ZoneBlock1' class='ZoneBlock'><br>&nbsp&nbsp&nbsp&nbsp
+                <input id='PositiveEleZone' type="radio" name='Zone1'>順屬性 ZONE (1.5倍)<br>&nbsp&nbsp&nbsp&nbsp
+                <input id='NegativeEleZone' type="radio" name='Zone1'>逆屬性 ZONE (0.5倍)<br>&nbsp&nbsp&nbsp&nbsp
+                <input id='PositiveAtkZone' type="radio" name='Zone1'>順攻擊 ZONE (1.3倍)<br>&nbsp&nbsp&nbsp&nbsp
+                <input id='NegativeAtkZone' type="radio" name='Zone1'>逆攻擊 ZONE (0.7倍)<br>&nbsp&nbsp&nbsp&nbsp
+                <input id='PositiveSmallChaosZone' type="radio" name='Zone1'>順主線混沌 ZONE (1.75倍)<br>&nbsp&nbsp&nbsp&nbsp
+                <input id='PositiveBigChaosZone' type="radio" name='Zone1'>順再戰混沌 ZONE (2倍)
+            </span><br><br>
         </form>
     </div>
     <div id='phyEleItg' class='inputSpace' style='display:none'>
