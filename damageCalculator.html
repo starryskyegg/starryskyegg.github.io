@@ -276,6 +276,8 @@
             OnOff('.CritBuffCheck');
             //ZONE收合
             OnOff('.ZoneCheck');
+            //減傷盾收合
+            OnOff('.ShieldCheck');
         })
     </script>
 </head>
@@ -651,6 +653,15 @@
                 <input id='PositiveSmallChaosZone' type="radio" name='Zone1'>順主線混沌 ZONE (1.75倍)<br>&nbsp&nbsp&nbsp&nbsp
                 <input id='PositiveBigChaosZone' type="radio" name='Zone1'>順再戰混沌 ZONE (2倍)
             </span><br><br>
+            <span><!--減傷盾-->
+                <input id='ShieldCheck1' type='checkbox' class='ShieldCheck'>減傷盾
+            </span>
+            <span id='ShieldBlock1' class='ShieldBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp減傷效果 = <input id='Shield1' type='text' class='nature'> %
+            </span><br><br>
+            <div><!--破碎-->
+                <input id='BreacCheck1' type='checkbox'>破碎
+            </div><br>
         </form>
     </div>
     <div id='phyEleItg' class='inputSpace' style='display:none'>
