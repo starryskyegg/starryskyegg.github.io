@@ -49,16 +49,17 @@
             left: 0;
             clear: left;
             display: none;
-            user-select: none;
         }
 
         input[type='text'] {
             width: 4em;
         }
+        span.resultCrit{font-size:16pt;}
+        th.result{font-size:12pt; width:150px}
     </style>
     <script src='jquery-3.6.0.min.js'></script>
     <script>
-        //計算頁面控制
+        //頁面控制
         var physical = true, magical = false, elemental = true, nonElemental = false;
         var pwrBase = true, itgBase = false, spdBase = false;
         function colorJudge(id, key) {
@@ -93,7 +94,7 @@
         }
     </script>
     <script>
-        $('document').ready(function () {
+        $(document).ready(function () {
             //限定輸入正整數或正浮點數
             $(document).on('input', ':text.nature', (function () {
                 $(this).val(this.value.replace(/[^0-9]/g, ""));
@@ -240,6 +241,8 @@
             OnOff('.PhyRstDownCheck');
             //物理耐性UP收合
             OnOff('.PhyRstUpCheck');
+            //精神統一收合
+            OnOff('.SpiritCheck');
             //屬性buff收合
             OnOff('.EleBuffCheck');
             //武器種buff收合
@@ -663,10 +666,159 @@
                 <input id='BreacCheck1' type='checkbox'>破碎
             </div><br>
         </form>
+        <h3>3.計算結果</h3>
+            <table id='SgCrit' class='result'><!--爆擊單下-->
+                <thead>
+                    <tr>
+                        <th colspan="5"><span class='resultCrit'>爆擊傷害</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class='result'></th>
+                        <th class='result'>正常</th>
+                        <th class='result'>弱點</th>
+                        <th class='result'>耐性</th>
+                        <th class='result'>吸收</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>單下最小傷害</th>
+                        <th id='SgCritNormMin1'>0</th>
+                        <th id='SgCritWeakMin1'>0</th>
+                        <th id='SgCritRstMin1'>0</th>
+                        <th id='SgCritAbsMin1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>單下最大傷害</th>
+                        <th id='SgCritNormMax1'>0</th>
+                        <th id='SgCritWeakMax1'>0</th>
+                        <th id='SgCritRstMax1'>0</th>
+                        <th id='SgCritAbsMax1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>單下期望傷害</th>
+                        <th id='SgCritNormExp1'>0</th>
+                        <th id='SgCritWeakExp1'>0</th>
+                        <th id='SgCritRstExp1'>0</th>
+                        <th id='SgCritAbsExp1'>0</th>
+                    </tr>
+                </tbody>
+            </table><br>
+            <table id='SgNoCrit' class='result'><!--無爆擊單下-->
+                <thead>
+                    <tr>
+                        <th colspan="5"><span class='resultCrit'>無爆擊傷害</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class='result'></th>
+                        <th class='result'>正常</th>
+                        <th class='result'>弱點</th>
+                        <th class='result'>耐性</th>
+                        <th class='result'>吸收</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>單下最小傷害</th>
+                        <th id='SgNoCritNormMin1'>0</th>
+                        <th id='SgNoCritWeakMin1'>0</th>
+                        <th id='SgNoCritRstMin1'>0</th>
+                        <th id='SgNoCritAbsMin1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>單下最大傷害</th>
+                        <th id='SgNoCritNormMax1'>0</th>
+                        <th id='SgNoCritWeakMax1'>0</th>
+                        <th id='SgNoCritRstMax1'>0</th>
+                        <th id='SgNoCritAbsMax1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>單下期望傷害</th>
+                        <th id='SgNoCritNormExp1'>0</th>
+                        <th id='SgNoCritWeakExp1'>0</th>
+                        <th id='SgNoCritRstExp1'>0</th>
+                        <th id='SgNoCritAbsExp1'>0</th>
+                    </tr>
+                </tbody>
+            </table><br>
+            <table id='SkCrit' class='result'><!--爆擊技能-->
+                <thead>
+                    <tr>
+                        <th colspan="5"><span class='resultCrit'>爆擊傷害</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class='result'></th>
+                        <th class='result'>正常</th>
+                        <th class='result'>弱點</th>
+                        <th class='result'>耐性</th>
+                        <th class='result'>吸收</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>技能最小傷害</th>
+                        <th id='SkCritNormMin1'>0</th>
+                        <th id='SkCritWeakMin1'>0</th>
+                        <th id='SkCritRstMin1'>0</th>
+                        <th id='SkCritAbsMin1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>技能最大傷害</th>
+                        <th id='SkCritNormMax1'>0</th>
+                        <th id='SkCritWeakMax1'>0</th>
+                        <th id='SkCritRstMax1'>0</th>
+                        <th id='SkCritAbsMax1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>技能期望傷害</th>
+                        <th id='SkCritNormExp1'>0</th>
+                        <th id='SkCritWeakExp1'>0</th>
+                        <th id='SkCritRstExp1'>0</th>
+                        <th id='SkCritAbsExp1'>0</th>
+                    </tr>
+                </tbody>
+            </table><br>
+            <table id='SkNoCrit' class='result'><!--無爆擊技能-->
+                <thead>
+                    <tr>
+                        <th colspan="5"><span class='resultCrit'>無爆擊傷害</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class='result'></th>
+                        <th class='result'>正常</th>
+                        <th class='result'>弱點</th>
+                        <th class='result'>耐性</th>
+                        <th class='result'>吸收</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>技能最小傷害</th>
+                        <th id='SkNoCritNormMin1'>0</th>
+                        <th id='SkNoCritWeakMin1'>0</th>
+                        <th id='SkNoCritRstMin1'>0</th>
+                        <th id='SkNoCritAbsMin1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>技能最大傷害</th>
+                        <th id='SkNoCritNormMax1'>0</th>
+                        <th id='SkNoCritWeakMax1'>0</th>
+                        <th id='SkNoCritRstMax1'>0</th>
+                        <th id='SkNoCritAbsMax1'>0</th>
+                    </tr>
+                    <tr>
+                        <th class='result'>技能期望傷害</th>
+                        <th id='SkNoCritNormExp1'>0</th>
+                        <th id='SkNoCritWeakExp1'>0</th>
+                        <th id='SkNoCritRstExp1'>0</th>
+                        <th id='SkNoCritAbsExp1'>0</th>
+                    </tr>
+                </tbody>
+            </table>
     </div>
     <div id='phyEleItg' class='inputSpace' style='display:none'>
         <h2>◎ 屬性物理傷害(知性依存)</h2>
-        <!--縮寫2-->
+        <!--代號2-->
         <h3>1.基礎數值</h3>
         <form>
             <div>
