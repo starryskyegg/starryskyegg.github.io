@@ -43,8 +43,7 @@
         }
 
         div.inputSpace {
-            width: 600px;
-            height: 500px;
+            width: 1200px;
             display: block;
             margin-top: 3em;
             left: 0;
@@ -96,12 +95,12 @@
     <script>
         $('document').ready(function () {
             //限定輸入正整數或正浮點數
-            $(document).on('input',':text.nature', (function () {
+            $(document).on('input', ':text.nature', (function () {
                 $(this).val(this.value.replace(/[^0-9]/g, ""));
             }))
-            $(document).on('input',':text.float', (function () {
+            $(document).on('input', ':text.float', (function () {
                 $(this).val($(this).val().replace(/[^0-9.]/g, ""));
-                if($(this).val().indexOf('.') != -1){
+                if ($(this).val().indexOf('.') != -1) {
                     var str_ = $(this).val().substr($(this).val().indexOf('.') + 1);
                     if (str_.indexOf(".") != -1) {
                         $(this).val($(this).val().substr(0, $(this).val().indexOf(".") + str_.indexOf(".") + 1));
@@ -109,48 +108,107 @@
                 }
             }))
             //增減輸入欄數量(遞減加算)
-            $('.plusButton').click(function(){
+            $('.plusButton.Decrease').click(function () {
                 $(this).parent().next().append('<span>, <input type="text" class="Decrease float"> % </span>')
             })
-            $('.minusButton').click(function(){
+            $('.minusButton.Decrease').click(function () {
                 $(this).parent().next().children().last().remove()
-                if($(this).parent().next().children().length == 0){
+                if ($(this).parent().next().children().length == 0) {
                     $(this).parent().next().append('<span><input type="text" class="Decrease float"> % </span>')
                 }
                 bros = $(this).parent().next().children().children()
                 var x = bros.length;
                 var y = [];
-                for(var i = 0; i<x; i++){
+                for (var i = 0; i < x; i++) {
                     y.push(Number(bros.eq(i).val()));
                 };
-                y.sort(function(a,b){return b-a;});
+                y.sort(function (a, b) { return b - a; });
                 var stack = y[0]; sum = y[0]
-                for(var a = 1; a<x; a++){
-                    stack = stack*y[a]*0.01;
+                for (var a = 1; a < x; a++) {
+                    stack = stack * y[a] * 0.01;
                     sum = sum + stack;
                 };
-                sum = Math.floor(sum*100)/100;
+                sum = Math.floor(sum * 100) / 100;
+                $(this).parent().next().next().next().text(sum);
+            })
+            //增減輸入欄數量(單純加算)
+            $('.plusButton.Plus').click(function () {
+                $(this).parent().next().append('<span>, <input type="text" class="Plus float"> % </span>')
+            })
+            $('.minusButton.Plus').click(function () {
+                $(this).parent().next().children().last().remove()
+                if ($(this).parent().next().children().length == 0) {
+                    $(this).parent().next().append('<span><input type="text" class="Plus float"> % </span>')
+                }
+                bros = $(this).parent().next().children().children()
+                var x = bros.length;
+                var y = [];
+                for (var i = 0; i < x; i++) {
+                    y.push(Number(bros.eq(i).val()));
+                };
+                y.sort(function (a, b) { return b - a; });
+                var sum = y[0]
+                for (var a = 1; a < x; a++) {
+                    sum = sum + y[a];
+                };
+                $(this).parent().next().next().next().text(sum);
+            })
+            //增減輸入欄數量(分開加算)
+            $('.plusButton.Independent').click(function () {
+                $(this).parent().next().append('<span>, <input type="text" class="Independent float"> % </span>')
+            })
+            $('.minusButton.Independent').click(function () {
+                $(this).parent().next().children().last().remove()
+                if ($(this).parent().next().children().length == 0) {
+                    $(this).parent().next().append('<span><input type="text" class="Independent float"> % </span>')
+                }
+                bros = $(this).parent().next().children().children()
+                var x = bros.length;
+                var y = [];
+                for (var i = 0; i < x; i++) {
+                    y.push(Number(bros.eq(i).val()));
+                };
+                y.sort(function (a, b) { return b - a; });
+                var sum = y[0]
+                for (var a = 1; a < x; a++) {
+                    sum = sum + y[a];
+                };
                 $(this).parent().next().next().next().text(sum);
             })
             //輸出遞減加算效果
-            $(document).on('change','.Decrease',(function(){
+            $(document).on('change', '.Decrease', (function () {
                 bros = $(this).parent().parent().children().children()
                 var x = bros.length;
                 var y = [];
-                for(var i = 0; i<x; i++){
+                for (var i = 0; i < x; i++) {
                     y.push(Number(bros.eq(i).val()));
                 };
-                y.sort(function(a,b){return b-a;});
+                y.sort(function (a, b) { return b - a; });
                 var stack = y[0]; sum = y[0]
-                for(var a = 1; a<x; a++){
-                    stack = stack*y[a]*0.01;
+                for (var a = 1; a < x; a++) {
+                    stack = stack * y[a] * 0.01;
                     sum = sum + stack;
                 };
-                sum = Math.floor(sum*100)/100;
+                sum = Math.floor(sum * 100) / 100;
+                $(this).parent().parent().next().next().text(sum);
+            }))
+            //輸出單純加算效果
+            $(document).on('change', '.Plus', (function () {
+                bros = $(this).parent().parent().children().children()
+                var x = bros.length;
+                var y = [];
+                for (var i = 0; i < x; i++) {
+                    y.push(Number(bros.eq(i).val()));
+                };
+                y.sort(function (a, b) { return b - a; });
+                var sum = y[0]
+                for (var a = 1; a < x; a++) {
+                    sum = sum + y[a];
+                };
                 $(this).parent().parent().next().next().text(sum);
             }))
             //收合
-            function OnOff(checkbox){
+            function OnOff(checkbox) {
                 var target = $(checkbox).parent().next()
                 target.hide();
                 $(checkbox).click(function () {
@@ -160,7 +218,8 @@
                     else {
                         $(this).parent().next().hide();
                     }
-                })}
+                })
+            }
             //蓄珠數值收合
             OnOff('.stackCheck');
             //挺身收合
@@ -174,19 +233,47 @@
             //知性debuff收合
             OnOff('.ItgDebuffCheck');
             //屬性耐性DOWN收合
-            OnOff('.EleRstDownCheck')
+            OnOff('.EleRstDownCheck');
             //屬性耐性UP收合
-            OnOff('.EleRstUpCheck')
+            OnOff('.EleRstUpCheck');
             //物理耐性DOWN收合
-            OnOff('.PhyRstDownCheck')
+            OnOff('.PhyRstDownCheck');
             //物理耐性UP收合
-            OnOff('.PhyRstUpCheck')
+            OnOff('.PhyRstUpCheck');
             //屬性buff收合
-            OnOff('.EleBuffCheck')
+            OnOff('.EleBuffCheck');
             //武器種buff收合
-            OnOff('.WpBuffCheck')
+            OnOff('.WpBuffCheck');
             //AFcombo收合
-            OnOff('.AFcomboCheck')
+            OnOff('.AFcomboCheck');
+            //裝備buff(屬性&普攻強化)收合
+            OnOff('.EqEleBuffCheck');
+            //裝備debuff(屬性)收合
+            OnOff('.EqEleDebuffCheck');
+            //裝備buff(HP)收合
+            OnOff('.EqHPBuffCheck');
+            //絕望收合
+            OnOff('.DesperateCheck');
+            //敵方異常(技能)收合
+            OnOff('.SkillPpCheck');
+            //敵方異常(武器)收合
+            OnOff('.WpPpCheck');
+            //敵方異常(靈晶)收合
+            OnOff('.GrastaPpCheck');
+            //自身異常收合
+            OnOff('.SelfPpCheck');
+            //弱點強化收合
+            OnOff('.WeakCheck');
+            //背水收合
+            OnOff('.EneNumCheck');
+            //技能爆擊收合
+            OnOff('.SkillCritCheck');
+            //技能HP收合
+            OnOff('.SkillHPCheck');
+            //技能debuff數收合
+            OnOff('.SkillDebuffNumCheck');
+            //爆傷收合
+            OnOff('.CritBuffCheck');
         })
     </script>
 </head>
@@ -242,204 +329,336 @@
         }</script>
     <br><br>
     <div id='phyElePwr' class='inputSpace' style='display:block'>
-        <h2>◎ 屬性物理傷害(腕力依存)</h2><!--縮寫1-->
+        <h2>◎ 屬性物理傷害(腕力依存)</h2>
+        <!--代號1-->
         <h3>1.基礎數值</h3>
         <form>
-            <div><!--攻擊part-->
+            <div><!--攻擊-->
                 腕力<input id='Pwr1' type='text' value='' class='nature'>&nbsp
                 武器攻擊<input id='WpAtk1' type='text' value='' class='nature'>
             </div><br>
-            <div><!--魔力part-->
+            <div><!--魔力-->
                 知性<input id='Itg1' type='text' value='' class='nature'>&nbsp
                 武器魔力<input id='WpMatk1' type='text' value='' class='nature'>
             </div><br>
-            <div><!--蓄珠part-->
-                <input id='stack1' type='checkbox' class='stackCheck'>蓄珠數值提升
+            <div><!--蓄珠-->
+                <input id='stackCheck1' type='checkbox' class='stackCheck'>蓄珠數值提升
             </div>
             <div id='StackAddition1' class='stackAddition'>
                 &nbsp&nbsp&nbsp&nbsp&nbsp腕力提升<input id='stackPwr1' type='text' class='nature'>&nbsp
                 知性提升<input id='stackItg1' type='text' class='nature'>
             </div><br>
-            <span><!--挺身part-->
-                <input id='body1' type='checkbox' class='bodyCheck'>挺身
+            <span><!--挺身-->
+                <input id='bodyCheck1' type='checkbox' class='bodyCheck'>挺身
             </span>
             <span id='bodyBlock1' class='bodyBlock'>
                 &nbsp&nbsp&nbsp&nbsp&nbsp耐力<input id='Edr1' type='text' class='nature'>&nbsp
                 精神<input id='Spr1' type='text' class='nature'>
             </span><br><br>
-            <div><!--逆境part-->
-                <input id='adversity1' type='checkbox'>逆境
+            <div><!--逆境-->
+                <input id='adversityCheck1' type='checkbox'>逆境
             </div><br>
-            <span><!--腕力BUFF part-->
-                <input id='PwrBuff1' type='checkbox' class='PwrBuffCheck'>腕力BUFF
+            <span><!--腕力BUFF-->
+                <input id='PwrBuffCheck1' type='checkbox' class='PwrBuffCheck'>腕力BUFF
             </span>
             <span id='PwrBuffBlock1' class='PwrBuffBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='PwrBuffInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 腕力BUFF效果 = <span id='PwrBuffOutput1'>0</span> %
             </span><br><br>
-            <span><!--腕力DEBUFF part-->
-                <input id='PwrDebuff1' type='checkbox' class='PwrDebuffCheck'>腕力DEBUFF
+            <span><!--腕力DEBUFF-->
+                <input id='PwrDebuffCheck1' type='checkbox' class='PwrDebuffCheck'>腕力DEBUFF
             </span>
             <span id='PwrDebuffBlock1' class='PwrDebuffBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='PwrDebuffInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 腕力DEBUFF效果 = <span id='PwrDebuffOutput1'>0</span> %
             </span><br><br>
-            <span><!--知性BUFF part-->
-                <input id='ItgBuff1' type='checkbox' class='ItgBuffCheck'>知性BUFF
+            <span><!--知性BUFF-->
+                <input id='ItgBuffCheck1' type='checkbox' class='ItgBuffCheck'>知性BUFF
             </span>
             <span id='ItgBuffBlock1' class='ItgBuffBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='ItgBuffInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 知性BUFF效果 = <span id='ItgBuffOutput1'>0</span> %
             </span><br><br>
-            <span><!--知性DEBUFF part-->
-                <input id='ItgDebuff1' type='checkbox' class='ItgDebuffCheck'>知性DEBUFF
+            <span><!--知性DEBUFF-->
+                <input id='ItgDebuffCheck1' type='checkbox' class='ItgDebuffCheck'>知性DEBUFF
             </span>
             <span id='ItgDebuffBlock1' class='ItgDebuffBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='ItgDebuffInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 知性DEBUFF效果 = <span id='ItgDebuffOutput1'>0</span> %
             </span><br><br>
-            <div><!--技能part-->
-                技能倍率<input id='SkillMul1' type='text' value='100' class='nature'> % &nbsp
-                連擊數<input id='Hits1' type='text' value='1' class='nature'>
+            <div><!--技能-->
+                技能倍率<input id='SkillMul1' type='text' class='nature'> % &nbsp
+                連擊數<input id='Hits1' type='text' class='nature'>
             </div><br>
-            <div><!--敵方數值part-->
-                敵方物防<input id='Def1' type='text' value='174' class='nature'>
+            <div><!--敵方數值-->
+                敵方物防<input id='Def1' type='text' class='nature'>
             </div>
         </form>
         <h3>2.增傷計算</h3>
         <form>
-            <div><!--心眼part-->
-                <input id='hearteye1' type='checkbox'>心眼
-            </div><br>
-            <span><!--屬性耐性DOWN part-->
-                <input id='EleRstDown1' type='checkbox' class='EleRstDownCheck'>屬性耐性DOWN
+            <span><!--屬性耐性DOWN-->
+                <input id='EleRstDownCheck1' type='checkbox' class='EleRstDownCheck'>屬性耐性 DOWN
             </span>
             <span id='EleRstDownBlock1' class='EleRstDownBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='EleRstDownInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 屬性耐性DOWN效果 = <span id='EleRstDownOutput1'>0</span> %
             </span><br><br>
-            <span><!--屬性耐性UP part-->
-                <input id='EleRstUp1' type='checkbox' class='EleRstUpCheck'>屬性耐性UP
+            <span><!--屬性耐性UP-->
+                <input id='EleRstUpCheck1' type='checkbox' class='EleRstUpCheck'>屬性耐性 UP
             </span>
             <span id='EleRstUpBlock1' class='EleRstUpBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='EleRstUpInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 屬性耐性UP效果 = <span id='EleRstUpOutput1'>0</span> %
             </span><br><br>
-            <span><!--物理耐性DOWN part-->
-                <input id='PhyRstDown1' type='checkbox' class='PhyRstDownCheck'>物理耐性DOWN
+            <span><!--物理耐性DOWN-->
+                <input id='PhyRstDownCheck1' type='checkbox' class='PhyRstDownCheck'>物理耐性 DOWN
             </span>
             <span id='PhyRstDownBlock1' class='PhyRstDownBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='PhyRstDownInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 物理耐性DOWN效果 = <span id='PhyRstDownOutput1'>0</span> %
             </span><br><br>
-            <span><!--物理耐性UP part-->
-                <input id='PhyRstUp1' type='checkbox' class='PhyRstUpCheck'>物理耐性UP
+            <span><!--物理耐性UP-->
+                <input id='PhyRstUpCheck1' type='checkbox' class='PhyRstUpCheck'>物理耐性 UP
             </span>
             <span id='PhyRstUpBlock1' class='PhyRstUpBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='PhyRstUpInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 物理耐性UP效果 = <span id='PhyRstUpOutput1'>0</span> %
             </span><br><br>
-            <div><!--攻擊己方part-->
-                <input id='chaos1' type='checkbox'>混亂或卑鄙時攻擊己方
+            <div><!--攻擊己方-->
+                <input id='chaosCheck1' type='checkbox'>混亂或卑鄙時攻擊己方
             </div><br>
-            <span><!--屬性BUFF part-->
-                <input id='EleBuff1' type='checkbox' class='EleBuffCheck'>屬性BUFF
+            <span><!--屬性BUFF-->
+                <input id='EleBuffCheck1' type='checkbox' class='EleBuffCheck'>屬性 BUFF
             </span>
             <span id='EleBuffBlock1' class='EleBuffBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='EleBuffInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 屬性BUFF效果 = <span id='EleBuffOutput1'>0</span> %
             </span><br><br>
-            <span><!--武器種BUFF part-->
-                <input id='WpBuff1' type='checkbox' class='WpBuffCheck'>武器種類BUFF
+            <span><!--武器種BUFF-->
+                <input id='WpBuffCheck1' type='checkbox' class='WpBuffCheck'>武器種類 BUFF
             </span>
             <span id='WpBuffBlock1' class='WpBuffBlock'>&nbsp&nbsp&nbsp&nbsp
                 <span>
-                    <input type='button' class='plusButton' value='＋'>
-                    <input type='button' class='minusButton' value='－'>
+                    <input type='button' class='plusButton Decrease' value='＋'>
+                    <input type='button' class='minusButton Decrease' value='－'>
                 </span>
                 <span id='WpBuffInput1'>
                     <span><input type="text" class="Decrease float"> % </span>
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 武器種類BUFF效果 = <span id='WpBuffOutput1'>0</span> %
             </span><br><br>
-            <span><!--AF Combo part-->
-                <input id='AFcombo1' type='checkbox' class='AFcomboCheck'>AF combo
+            <span><!--AF Combo-->
+                <input id='AFcomboCheck1' type='checkbox' class='AFcomboCheck'> AF combo
             </span>
             <span id='AFcomboBlock1' class='AFcomboBlock'>
-                &nbsp&nbsp&nbsp&nbsp&nbspAF combo = <input id='combo1' type='text' class='nature'> % 
+                &nbsp&nbsp&nbsp&nbsp&nbspAF combo = <input id='combo1' type='text' class='nature'> %
             </span><br><br>
-            
+            <span><!--裝備Buff(屬性&普攻強化)BUFF-->
+                <input id='EqEleBuffCheck1' type='checkbox' class='EqEleBuffCheck'>裝備 BUFF (屬性&普攻強化)
+            </span>
+            <span id='EqEleBuffBlock1' class='EqEleBuffBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span>
+                    <input type='button' class='plusButton Plus' value='＋'>
+                    <input type='button' class='minusButton Plus' value='－'>
+                </span>
+                <span id='EqEleBuffInput1'>
+                    <span><input type="text" class="Plus float"> % </span>
+                </span><br>&nbsp&nbsp&nbsp&nbsp
+                裝備BUFF(屬性&普攻強化)效果 = <span id='EqEleBuffOutput1'>0</span> %
+            </span><br><br>
+            <span><!--裝備Buff(屬性)DEBUFF-->
+                <input id='EqEleDebuffCheck1' type='checkbox' class='EqEleDebuffCheck'>裝備 DEBUFF (屬性)
+            </span>
+            <span id='EqEleDebuffBlock1' class='EqEleDebuffBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span>
+                    <input type='button' class='plusButton Plus' value='＋'>
+                    <input type='button' class='minusButton Plus' value='－'>
+                </span>
+                <span id='EqEleDebuffInput1'>
+                    <span><input type="text" class="Plus float"> % </span>
+                </span><br>&nbsp&nbsp&nbsp&nbsp
+                裝備DEBUFF(屬性)效果 = <span id='EqEleBuffOutput1'>0</span> %
+            </span><br><br>
+            <span><!--裝備Buff(HP條件)BUFF-->
+                <input id='EqHPBuffCheck1' type='checkbox' class='EqHPBuffCheck'>裝備 BUFF ( HP 條件)
+            </span>
+            <span id='EqHPBuffBlock1' class='EqHPBuffBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span>
+                    <input type='button' class='plusButton Independent' value='＋'>
+                    <input type='button' class='minusButton Independent' value='－'>
+                </span>
+                <span id='EqHPBuffInput1'>
+                    <span><input type="text" class="float Independent"> % </span>
+                </span>
+            </span><br><br>
+            <span><!--絕望-->
+                <input id='DesperateCheck1' type='checkbox' class='DesperateCheck'>絕望裝備
+            </span>
+            <span id='DesperateBlock1' class='DesperateBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span id='DesperateInput1'>
+                    <span>基礎加成 = <input id='DesperateBase1' type="text" class="nature"> %
+                        死亡隊友數 = <input type="text" class="nature">個</span>
+                </span>
+            </span><br><br>
+            <span><!--敵方異常(技能)-->
+                <input id='SkillPpCheck1' type='checkbox' class='SkillPpCheck'>敵方異常時增傷 (技能)
+            </span>
+            <span id='SkillPpBlock1' class='SkillPpBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp增傷效果1 = <input id='firstSkillPp1' type='text' class='nature'> %UP
+                ，增傷效果2 = <input id='secondSkillPp1' type='text' class='nature'> %UP
+            </span><br><br>
+            <span><!--敵方異常(武器)-->
+                <input id='WpPpCheck1' type='checkbox' class='WpPpCheck'>敵方異常時增傷 (武器)
+            </span>
+            <span id='WpPpBlock1' class='WpPpBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp增傷效果 = <input id='WpPp1' type='text' class='nature'> %
+            </span><br><br>
+            <span><!--敵方異常(靈晶)-->
+                <input id='GrastaPpCheck1' type='checkbox' class='GrastaPpCheck'>敵方異常時增傷 (靈晶)
+            </span>
+            <span id='GrastaPpBlock1' class='GrastaPpBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp35% UP有 <input id='Grasta35Pp1' type='text' class='nature'> 個，
+                30% UP有 = <input id='Grasta30Pp1' type='text' class='nature'> 個
+            </span><br><br>
+            <span><!--自身異常-->
+                <input id='SelfPpCheck1' type='checkbox' class='SelfPpCheck'>自身異常時增傷
+            </span>
+            <span id='SelfPpBlock1' class='SelfPpBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp<input id='SelfPoison1' type='checkbox' class='SelfPoison'>中毒&nbsp&nbsp
+                <input id='SelfPain1' type='checkbox' class='SelfPain'>受傷&nbsp&nbsp
+                <input id='SelfLock1' type='checkbox' class='SelfLock'>封印&nbsp&nbsp
+                <input id='SelfProvoke1' type='checkbox' class='SelfProvoke'>挑釁&nbsp&nbsp
+            </span><br><br>
+            <span><!--弱點強化-->
+                <input id='WeakCheck1' type='checkbox' class='WeakCheck'>弱點強化
+            </span>
+            <span id='WeakBlock1' class='WeakBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp增傷效果 = <input id='Weak1' type='text' class='nature'> %
+            </span><br><br>
+            <div><!--薔薇-->
+                <input id='RoseCheck1' type='checkbox'> MP 消費增傷
+            </div><br>
+            <span><!--背水-->
+                <input id='EneNumCheck1' type='checkbox' class='EneNumCheck'>背水
+            </span>
+            <span id='EneNumBlock1' class='EneNumBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp敵人數量 = <input id='EneNum1' type='text' class='nature'> 個
+            </span><br><br>
+            <div><!--捨身-->
+                <input id='SacrificeCheck1' type='checkbox'>捨身
+            </div><br>
+            <div><!--心眼-->
+                <input id='HearteyeCheck1' type='checkbox'>心眼
+            </div><br>
+            <span><!--技能爆擊-->
+                <input id='SkillCritCheck1' type='checkbox' class='SkillCritCheck'>技能中爆擊增傷
+            </span>
+            <span id='SkillCritBlock1' class='SkillCritBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp增傷效果 = <input id='SkillCrit1' type='text' class='nature'> %UP
+            </span><br><br>
+            <span><!--技能HP條件-->
+                <input id='SkillHPCheck1' type='checkbox' class='SkillHPCheck'>技能中 HP 條件增傷
+            </span>
+            <span id='SkillHPBlock1' class='SkillHPBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp增傷效果 = <input id='SkillHP1' type='text' class='nature'> %UP
+            </span><br><br>
+            <span><!--技能debuff數量-->
+                <input id='SkillDebuffNumCheck1' type='checkbox' class='SkillDebuffNumCheck'>特定技能中 debuff 種類數增傷
+            </span>
+            <span id='SkillDebuffNumBlock1' class='SkillDebuffNumBlock'>
+                &nbsp&nbsp&nbsp&nbsp&nbsp增傷效果 = <input id='SkillDebuffNum1' type='text' class='nature'> %UP
+            </span><br><br>
+            <span><!--爆傷-->
+                <input id='CritBuffCheck1' type='checkbox' class='CritBuffCheck'>爆擊時增傷 BUFF
+            </span>
+            <span id='CritBuffBlock1' class='CritBuffBlock'>&nbsp&nbsp&nbsp&nbsp
+                <span>
+                    <input type='button' class='plusButton Plus' value='＋'>
+                    <input type='button' class='minusButton Plus' value='－'>
+                </span>
+                <span id='CritBuffInput1'>
+                    <span><input type="text" class="Plus float"> % </span>
+                </span><br>&nbsp&nbsp&nbsp&nbsp
+                爆擊時增傷BUFF效果 = <span id='CritBuffOutput1'>0</span> %
+            </span><br><br>
+            <div><!--狙擊-->
+                <input id='SnipeCheck1' type='checkbox'>狙擊
+            </div><br>
         </form>
     </div>
     <div id='phyEleItg' class='inputSpace' style='display:none'>
-        <h2>◎ 屬性物理傷害(知性依存)</h2><!--縮寫2-->
+        <h2>◎ 屬性物理傷害(知性依存)</h2>
+        <!--縮寫2-->
         <h3>1.基礎數值</h3>
         <form>
-            <div><!--魔力part-->
+            <div>
+                <!--魔力part-->
                 知性<input id='Itg2' type='text' value='' class='nature'>&nbsp
                 武器魔力<input id='WpMatk2' type='text' value='' class='nature'>
             </div><br>
-            <div><!--蓄珠part-->
+            <div>
+                <!--蓄珠part-->
                 <input id='stack2' type='checkbox' class='stackCheck'>蓄珠數值提升
             </div>
             <div id='StackAddition2' class='stackAddition'>
                 &nbsp&nbsp&nbsp&nbsp&nbsp知性提升<input id='stackItg1' type='text' class='nature'>
             </div><br>
-            <span><!--知性BUFF part-->
+            <span>
+                <!--知性BUFF part-->
                 <input id='ItgBuff2' type='checkbox' class='ItgBuffCheck'>知性BUFF
             </span>
             <span id='ItgBuffBlock2' class='ItgBuffBlock'>&nbsp&nbsp&nbsp&nbsp
@@ -452,7 +671,8 @@
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 知性BUFF效果 = <span id='ItgBuffOutput2'>0</span> %
             </span><br><br>
-            <span><!--知性DEBUFF part-->
+            <span>
+                <!--知性DEBUFF part-->
                 <input id='ItgDebuff2' type='checkbox' class='ItgDebuffCheck'>知性DEBUFF
             </span>
             <span id='ItgDebuffBlock2' class='ItgDebuffBlock'>&nbsp&nbsp&nbsp&nbsp
@@ -465,11 +685,13 @@
                 </span><br>&nbsp&nbsp&nbsp&nbsp
                 知性DEBUFF效果 = <span id='ItgDebuffOutput2'>0</span> %
             </span><br><br>
-            <div><!--技能part-->
+            <div>
+                <!--技能part-->
                 技能倍率<input id='SkillMul2' type='text' value='100' class='nature'> % &nbsp
                 連擊數<input id='Hits2' type='text' value='1' class='nature'>
             </div><br>
-            <div><!--敵方數值part-->
+            <div>
+                <!--敵方數值part-->
                 敵方物防<input id='Def2' type='text' value='174' class='nature'>
             </div>
         </form>
